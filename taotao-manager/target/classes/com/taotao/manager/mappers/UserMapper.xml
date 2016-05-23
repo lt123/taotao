@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taotao.manager.dao.IUserDao">
+
+    <resultMap id="userMap" type="User">
+        <result property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+        <result property="createDate" column="created" />
+        <result property="updateDate" column="updated" />
+        <result property="salt" column="salt" />
+    </resultMap>
+
+    <sql id="columnList">
+        username,password,phone,email,created,updated,salt
+    </sql>
+
+    <sql id="columnWhere">
+    	<if test = "id != null">
+            and id = #{id}
+        </if>
+        <if test = "username != null">
+            and username = #{username}
+        </if>
+        <if test = "password != null">
+            and password = #{password}
+        </if>
+        <if test = "phone != null">
+            and phone = #{phone}
+        </if>
+        <if test = "email != null">
+            and email = #{email}
+        </if>
+        <if test = "createDate != null">
+            and created = #{createDate}
+        </if>
+        <if test = "updateDate != null">
+            and updated = #{updateDate}
+        </if>
+        <if test = "salt != null">
+            and salt = #{salt}
+        </if>
+    </sql>
+
+    <sql id="columnUpdate">
+        <if test = "username != null">
+            username = #{username}
+        </if>
+        <if test = "password != null">
+            ,password = #{password}
+        </if>
+        <if test = "phone != null">
+            ,phone = #{phone}
+        </if>
+        <if test = "email != null">
+            ,email = #{email}
+        </if>
+        <if test = "createDate != null">
+            ,created = #{createDate}
+        </if>
+        <if test = "updateDate != null">
+            ,updated = #{updateDate}
+        </if>
+        <if test = "salt != null">
+            ,salt = #{salt}
+        </if>
+    </sql>
+
+    <select id="getById" parameterType="long" resultMap="userMap">
+        select id,<include refid="columnList" /> from tb_user where id = #{id}
+    </select>
+
+    <delete id="deleteById" parameterType="long">
+        delete from tb_user where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="string">
+        delete from tb_user where id in
+        <foreach collection="list" item="list" open="(" close=")" separator=",">
+            #{list}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="User">
+        update tb_user
+        <set>
+            <include refid="columnUpdate" />
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user(<include refid="columnList" />)
+        values(#{username},#{password},#{phone},#{email},#{createDate},#{updateDate},#{salt})
+    </insert>
+
+    <select id="getByCondition" parameterType="map" resultMap="userMap">
+        select id,<include refid="columnList" />
+        from tb_user
+        <where>
+           <include refid="columnWhere" />
+        </where>
+        <if test="sort != null and sort == true">
+            order by id desc
+        </if>
+        <if test="currentPage != null and pageSize != null">
+            limit #{currentPage},#{pageSize}
+        </if>
+    </select>
+    
+    <select id="getCountByCondition" parameterType="map" resultType="int">
+        select count(1) from tb_user
+        <where>
+           <include refid="columnWhere" />
+        </where>
+    </select>
+</mapper>
