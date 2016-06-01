@@ -23,4 +23,5 @@ public class ItemController {
 	public PageResult<Item> list(Integer page,Integer rows) {
 		return itemService.getPageResult(MapUtil.createMap("currentPage",page,"pageSize",rows));
 	}
+	
 }
