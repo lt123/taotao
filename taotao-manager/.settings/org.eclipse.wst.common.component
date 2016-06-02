@@ -9,6 +9,9 @@
         <dependent-module archiveName="taotao-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/taotao-common/taotao-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="fastdfs-client-java-1.25.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/fastdfs-client-java/fastdfs-client-java">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="taotao-manager"/>
         <property name="java-output-path" value="/taotao-manager/target/classes"/>
     </wb-module>

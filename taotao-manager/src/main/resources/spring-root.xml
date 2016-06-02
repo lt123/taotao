@@ -15,13 +15,14 @@
 	<aop:aspectj-autoproxy />
 
 	<!-- 导入配置文件 -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<context:property-placeholder location="classpath:/*.properties" />
+<!-- 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:jdbc.properties</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 	<!-- 自动扫描特定注解类并纳入容器管理 -->
 	<!-- <context:component-scan base-package="com.taotao.manager"> -->
