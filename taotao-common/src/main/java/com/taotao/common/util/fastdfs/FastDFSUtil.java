@@ -24,10 +24,10 @@ public class FastDFSUtil {
 	static{
 		try {
 			String path = FastDFSUtil.class.getClassLoader().getResource(IFastDFSConstants.FASTDFS_CONF_NAME).getPath();
+			ClientGlobal.init(path);
 			trackerClient = new TrackerClient();
 			trackerServer = trackerClient.getConnection();
 			storageClient = new StorageClient(trackerServer, storageServer);
-			ClientGlobal.init(path);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -43,11 +43,8 @@ public class FastDFSUtil {
 			return url[0] + "/" + url[1];
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			return null;
 		}
-		return "";
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("FastDFSUtil.main()");
-	}
 }
